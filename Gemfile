@@ -40,3 +40,5 @@ gem "unicorn"
 gem "curb"
 # Redcarpet Markdown to HTML converter
 gem "redcarpet"
+#add Decorators
+gem "draper"
