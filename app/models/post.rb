@@ -26,6 +26,10 @@ class Post < ActiveRecord::Base
   scope :comments, where(:object_type => :comment)
   scope :messages, where(:object_type => :message)
 
+  @_header = nil
+  @_body = nil
+  @_tease = nil
+
   # Tags ( Taxonomies with a classification of tag )
   # post.tags returns all child taxonomies that are tags
   def tags
@@ -51,6 +55,38 @@ class Post < ActiveRecord::Base
 
   def is_a_page?
     self.object_type == :page
+  end
+
+  def body
+    self.parse unless @_body.present?
+    @_body
+  end
+
+  def header
+    self.parse unless @_header.present?
+    @_header
+  end
+
+  def tease
+    self.parse unless @_tease.present?
+    @_tease
+  end
+
+  def content=(content)
+    write_attribute(:content, normalize(content))
+  end
+
+  private
+
+  def parse
+    @_header, @_body = content.split(/-\s-\s-/, 2)
+    @_header, @_tease = @_header.split(/\*\s\*\s\*/, 2)
+
+    return @_header, @_tease, @body
+  end
+
+  def normalize text
+    text.gsub("\r\n", "\n").gsub("\r", "\n").gsub(/\n{2,}/, "\n\n")
   end
 
 end
