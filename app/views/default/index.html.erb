@@ -9,7 +9,10 @@
         <%= post.render({ preview: true }) %>
       <% end %>
 
-
+    <%= render :partial => 'shared/index_pagination', :locals => {
+            number_of_pages:    @pagination_number_of_pages,
+            current_page:       @pagination_current_page
+    } %>
 
     </div>
 
