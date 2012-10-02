@@ -51,6 +51,26 @@ class PostDecorator < Draper::Base
     end
   end
 
+  def nav_bar
+    h.content_tag :div, :class => 'navbar' do
+      h.content_tag :div, :class => 'navbar-inner' do
+        h.content_tag :ul, :class => 'nav' do
+          yield
+        end
+      end
+    end
+  end
+
+  def render_taxonomies type
+    tax_list = send(type)
+    tax_list.each do |tax|
+      render_taxonomy tax, tax == tax_list.first
+    end
+  end
+
+  def render_taxonomy tax, current = false
+    h.render :partial => 'taxonomies/taxonomy', :locals => { :t => tax, :current => current }
+  end
 
   # Accessing Helpers
   #   You can access any helper via a proxy
