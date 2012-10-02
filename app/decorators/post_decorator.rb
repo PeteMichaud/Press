@@ -72,4 +72,10 @@ class PostDecorator < Draper::Base
     h.render :partial => 'taxonomies/taxonomy', :locals => { :t => tax, :current => current }
   end
 
+  def render_comments
+    comments.each do |comment|
+      h.render :partial => 'posts/comment', :locals => { :comment => comment }
+    end
+  end
+
 end
