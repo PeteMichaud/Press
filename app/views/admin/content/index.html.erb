@@ -1,10 +1,7 @@
-<% @breadcrumbs = [link_to('Content Editor', admin_content_index_path), 'Post List'] if params[:type] == "posts" %>
-<% @breadcrumbs = [link_to('Content Editor', admin_content_index_path), 'Page List'] if params[:type] == "pages" %>
+<% @breadcrumbs = [link_to('Content Editor', admin_content_index_path), "#{params[:type].singularize.capitalize} List"] %>
 
 <div class='row'>
   <div class='span12'>
-
-
     <table class='table table-striped'>
       <thead>
       <tr>
@@ -18,11 +15,11 @@
       </tr>
       </thead>
       <tbody>
-      <% @content.each do |content| %>
+      <% @posts.each do |content| %>
         <tr>
           <td><%= check_box_tag "content[#{content.id}]" %></td>
           <td>
-            <%= render_markdown content.gsub(/\(\)/, "("+url_for('/' + content.seo_url + '/' + url_query)+")" ), { :limit => 1 } %>
+            <%= render_markdown content.header(url_query) %>
             by <%= content.user.display_name %>
           </td>
           <td>
