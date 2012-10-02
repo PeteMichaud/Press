@@ -24,7 +24,7 @@ class DefaultController < ApplicationController
   # Show a post or page, based on the SEO Url
   def show
     #load the post or page by seo url or return to index if not found
-    @post = Post.find_by_seo_url params[:seo_url]
+    @post = PostDecorator.find_by_seo_url params[:seo_url]
     if @post.present?
       @query = params[:query] || ''
 
