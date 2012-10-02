@@ -58,17 +58,17 @@ class Post < ActiveRecord::Base
   end
 
   def body
-    self.parse unless @_body.present?
+    parse unless @_body.present?
     @_body
   end
 
-  def header
-    self.parse unless @_header.present?
+  def header query = nil
+    parse unless @_header.present?
     @_header
   end
 
   def tease
-    self.parse unless @_tease.present?
+    parse unless @_tease.present?
     @_tease
   end
 
