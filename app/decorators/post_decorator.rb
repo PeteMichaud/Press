@@ -1,8 +1,8 @@
 class PostDecorator < Draper::Base
   decorates :post
 
-  def render preview = false
-    unless preview
+  def render opts = {preview: false}
+    unless opts[:preview]
       h.render :partial => "posts/#{object_type}"
     else
       h.render :partial => "posts/#{object_type}_preview"
